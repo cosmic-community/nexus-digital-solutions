@@ -19,7 +19,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script src="/dashboard-console-capture.js" />
+        {/* Changed: Added async attribute to prevent hydration issues */}
+        <script src="/dashboard-console-capture.js" async />
       </head>
       <body className="bg-white text-gray-900">
         <Header />
