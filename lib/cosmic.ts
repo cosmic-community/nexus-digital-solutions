@@ -1,5 +1,5 @@
 import { createBucketClient } from '@cosmicjs/sdk'
-import { Service, TeamMember, Testimonial } from '@/types'
+import { Service, TeamMember, Testimonial, BlogPost, BlogAuthor, BlogCategory } from '@/types'
 
 export const cosmic = createBucketClient({
   bucketSlug: process.env.COSMIC_BUCKET_SLUG as string,
@@ -57,5 +57,78 @@ export async function getTestimonials(): Promise<Testimonial[]> {
       return []
     }
     throw new Error('Failed to fetch testimonials')
+  }
+}
+
+// Changed: Added blog-related queries
+export async function getBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const response = await cosmic.objects
+      .find({ type: 'blog-posts', 'metadata.status': 'Published' })
+      .props(['id', 'title', 'slug', 'metadata', 'created_at'])
+      .depth(1)
+    
+    return (response.objects as BlogPost[]).sort((a, b) => {
+      const dateA = new Date(a.created_at || '').getTime()
+      const dateB = new Date(b.created_at || '').getTime()
+      return dateB - dateA
+    })
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return []
+    }
+    throw new Error('Failed to fetch blog posts')
+  }
+}
+
+export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  try {
+    const response = await cosmic.objects
+      .findOne({ type: 'blog-posts', slug })
+      .props(['id', 'title', 'slug', 'metadata', 'created_at'])
+      .depth(1)
+    
+    return response.object as BlogPost
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return null
+    }
+    throw new Error('Failed to fetch blog post')
+  }
+}
+
+export async function getBlogCategories(): Promise<BlogCategory[]> {
+  try {
+    const response = await cosmic.objects
+      .find({ type: 'blog-categories' })
+      .props(['id', 'title', 'slug', 'metadata'])
+      .depth(1)
+    
+    return response.objects as BlogCategory[]
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return []
+    }
+    throw new Error('Failed to fetch blog categories')
+  }
+}
+
+export async function getBlogPostsByCategory(categoryId: string): Promise<BlogPost[]> {
+  try {
+    const response = await cosmic.objects
+      .find({ type: 'blog-posts', 'metadata.post_categories': categoryId, 'metadata.status': 'Published' })
+      .props(['id', 'title', 'slug', 'metadata', 'created_at'])
+      .depth(1)
+    
+    return (response.objects as BlogPost[]).sort((a, b) => {
+      const dateA = new Date(a.created_at || '').getTime()
+      const dateB = new Date(b.created_at || '').getTime()
+      return dateB - dateA
+    })
+  } catch (error) {
+    if (hasStatus(error) && error.status === 404) {
+      return []
+    }
+    throw new Error('Failed to fetch posts by category')
   }
 }

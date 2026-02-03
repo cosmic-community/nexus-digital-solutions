@@ -22,6 +22,9 @@ export default function Header() {
             <a href="#testimonials" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
               Testimonials
             </a>
+            <Link href="/blog" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
+              Blog
+            </Link>
             <a 
               href="#contact" 
               className="gradient-bg text-white px-5 py-2.5 rounded-full font-medium hover:opacity-90 transition-opacity"
