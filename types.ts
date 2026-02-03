@@ -43,3 +43,40 @@ export interface Testimonial extends CosmicObject {
     rating?: number;
   };
 }
+
+// Changed: Added blog-related interfaces
+export interface BlogAuthor extends CosmicObject {
+  type: 'blog-authors';
+  metadata: {
+    author_name?: string;
+    email?: string;
+    bio?: string;
+    profile_photo?: ImageField;
+    linkedin_url?: string;
+  };
+}
+
+export interface BlogCategory extends CosmicObject {
+  type: 'blog-categories';
+  metadata: {
+    category_name?: string;
+    description?: string;
+    category_icon?: ImageField;
+  };
+}
+
+export interface BlogPost extends CosmicObject {
+  type: 'blog-posts';
+  metadata: {
+    post_title?: string;
+    meta_description?: string;
+    keywords?: string;
+    featured_image?: ImageField;
+    post_content?: string;
+    post_author?: BlogAuthor;
+    post_categories?: BlogCategory[];
+    read_time?: number;
+    status?: string;
+  };
+  created_at?: string;
+}

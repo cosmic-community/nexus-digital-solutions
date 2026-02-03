@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default function Footer() {
   const currentYear = new Date().getFullYear()
   
@@ -24,6 +26,7 @@ export default function Footer() {
               <li><a href="#services" className="hover:text-white transition-colors">Services</a></li>
               <li><a href="#team" className="hover:text-white transition-colors">Our Team</a></li>
               <li><a href="#testimonials" className="hover:text-white transition-colors">Testimonials</a></li>
+              <li><Link href="/blog" className="hover:text-white transition-colors">Blog</Link></li>
               <li><a href="#contact" className="hover:text-white transition-colors">Contact</a></li>
             </ul>
           </div>
