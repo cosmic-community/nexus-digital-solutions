@@ -13,24 +13,25 @@ export default function Header() {
           </Link>
           
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#services" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
+            <a href="/#services" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
               Services
             </a>
-            <a href="#team" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
+            <a href="/#team" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
               Team
             </a>
-            <a href="#testimonials" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
+            <a href="/#testimonials" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
               Testimonials
             </a>
             <Link href="/blog" className="text-gray-600 hover:text-primary-600 transition-colors font-medium">
               Blog
             </Link>
-            <a 
-              href="#contact" 
+            {/* Changed: Updated contact link to use dedicated contact page */}
+            <Link 
+              href="/contact" 
               className="gradient-bg text-white px-5 py-2.5 rounded-full font-medium hover:opacity-90 transition-opacity"
             >
               Contact Us
-            </a>
+            </Link>
           </nav>
           
           <button className="md:hidden p-2 text-gray-600 hover:text-gray-900">
